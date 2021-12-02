@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 from quart import abort
 from quart import Quart, request
@@ -86,6 +87,17 @@ async def update_live_jobs():
             print(e)
     return "OK"
 
+
+async def schedule():
+    await update_live_jobs()
+    while True:
+        await asyncio.sleep(300)
+        await update_live_jobs()
+
+
+@app.before_serving
+async def startup():
+    app.add_background_task(schedule)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
