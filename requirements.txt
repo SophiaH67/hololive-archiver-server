@@ -1,4 +1,6 @@
 hololive==0.1.3
 asyncio
-SQLAlchemy==1.4.26
 quart
+sqlalchemy_serializer
+flask_sqlalchemy
+psycopg2
