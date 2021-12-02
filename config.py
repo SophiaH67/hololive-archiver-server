@@ -1,16 +1,29 @@
+import datetime
 from typing import List
+from hololive import hololive
+from string import Template
 from yaml import safe_load, YAMLError
 
 with open("config.yaml", 'r') as stream:
-  try:
-    tmp_config = safe_load(stream)
-  except YAMLError as exc:
-    print("invalid config")
-    raise exc
+    try:
+        tmp_config = safe_load(stream)
+    except YAMLError as exc:
+        print("invalid config")
+        raise exc
 
-locations = {
-    "final": tmp_config['locations']['final']
-}
+# Templating options in config.yaml
+final_output_template = tmp_config['locations']['final']
+
+
+def get_final_output_path_from_stream(stream: hololive.Stream) -> str:
+    Template(final_output_template).substitute(
+        channel=stream.channel_id,
+        id=stream.id,
+        title=stream.title,
+        ext="mkv",
+        topic=stream.topic_id,
+        date=(stream.start_scheduled or datetime.datetime.now()).strftime("%Y%m%d")
+    )
 
 
 class holodex_search:
@@ -33,10 +46,10 @@ for target in tmp_config["youtube_targets"]:
     topics = target_parts[2].split(",")
 
     if org == "*":
-      org = None
+        org = None
     if channel_id == "*":
-      channel_id = None
+        channel_id = None
     if "*" in topics:
-      topics = [None]
+        topics = [None]
 
     holodex_searches.append(holodex_search(org, channel_id, topics))
