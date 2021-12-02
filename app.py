@@ -52,8 +52,8 @@ def pop_job():
 
 
 @app.patch("/job/<int:job_id>")
-def update_job_state(job_id):
-    new_status = request.json["status"]
+async def update_job_state(job_id):
+    new_status = (await request.json)["status"]
     job = db.session.query(live_job).filter(live_job.id == job_id).first()
     if not job:
         abort(404)
