@@ -16,7 +16,7 @@ final_output_template = tmp_config['locations']['final']
 
 
 def get_final_output_path_from_stream(stream: hololive.Stream) -> str:
-    Template(final_output_template).substitute(
+    return Template(final_output_template).substitute(
         channel=stream.channel_id,
         id=stream.id,
         title=stream.title.replace('/', '-'),
