@@ -10,6 +10,8 @@ from sqlalchemy.inspection import inspect
 from os import environ
 from sqlalchemy.exc import IntegrityError
 from classes.live_job import db, live_job
+import shutil
+
 app = Quart(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
@@ -52,6 +54,9 @@ def pop_job():
     return job.to_dict()
 
 
+def finish_job(job: live_job):
+    shutil.move(job.save_location, job.final_location)
+
 @app.patch("/job/<int:job_id>")
 async def update_job_state(job_id):
     new_status = (await request.json)["status"]
@@ -63,6 +68,8 @@ async def update_job_state(job_id):
     job.status = new_status
     db.session.add(job)
     db.session.commit()
+    if new_status == "finished":
+        finish_job(job)
     return job.to_dict()
 
 
