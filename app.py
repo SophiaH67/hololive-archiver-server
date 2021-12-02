@@ -1,6 +1,6 @@
 import asyncio
 import datetime
-from config import holodex_searches
+from config import get_final_output_path_from_stream, holodex_searches
 from quart import abort
 from quart import Quart, request
 from hololive import hololive
@@ -70,7 +70,8 @@ def stream_to_live_job(stream: hololive.Stream):
     safe_title = stream.title.replace("/", "_").replace("\\", "_")
     job = live_job(
         f"https://youtube.com/watch?v={stream.id}",
-        f"/shared/{stream.id}/[{formatted_date}] {safe_title}.mkv"
+        f"/shared/{stream.id}/[{formatted_date}] {safe_title}.mkv",
+        get_final_output_path_from_stream(stream),
     )
     db.session.add(job)
     try:
