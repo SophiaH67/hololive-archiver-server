@@ -15,7 +15,7 @@ class live_job(db.Model, SerializerMixin):
 
     def __init__(self, url, save_location, handler="yt-dlp", status="pending"):
         self.url = url
-        self.save_location = save_location
+        self.save_location = save_location.replace("\\", "").replace("/", "")
         self.status = status
         self.handler = handler
         self.error = None
