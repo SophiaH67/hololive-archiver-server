@@ -19,10 +19,13 @@ def get_final_output_path_from_stream(stream: hololive.Stream) -> str:
     Template(final_output_template).substitute(
         channel=stream.channel_id,
         id=stream.id,
-        title=stream.title,
+        title=stream.title.replace('/', '-'),
         ext="mkv",
-        topic=stream.topic_id,
-        date=(stream.start_scheduled or datetime.datetime.now()).strftime("%Y%m%d")
+        topic=stream.topic_id or "topic_not_set",
+        channel_org=stream.channel_org,
+        channel_name=stream.channel_name.replace("/", "-").replace("\\", "-"),
+        channel_id=stream.channel_id,
+        date=(stream.available_at or datetime.datetime.now()).strftime("%Y%m%d")
     )
 
 

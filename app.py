@@ -76,7 +76,7 @@ async def update_job_state(job_id):
 def stream_to_live_job(stream: hololive.Stream):
     formatted_date = (
         stream.start_scheduled or datetime.datetime.now()).strftime("%Y-%m-%d")
-    safe_title = stream.title.replace("/", "_").replace("\\", "_")
+    safe_title = stream.title.replace("/", "-").replace("\\", "-")
     job = live_job(
         f"https://youtube.com/watch?v={stream.id}",
         f"/shared/{stream.id}/[{formatted_date}] {safe_title}.mkv",
