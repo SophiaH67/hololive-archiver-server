@@ -99,7 +99,7 @@ def stream_to_live_job(stream: hololive.Stream):
             raise e
         # Update job if it already exists
         job = db.session.query(live_job).filter(
-            job.url == stream.url).first()
+            job.url == f"https://youtube.com/watch?v={stream.id}").first()
         if not job.automatic:
             return
         if job.status == "finished" or job.status == "error":
