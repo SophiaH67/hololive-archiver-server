@@ -1,14 +1,18 @@
 youtube_targets:
-  # Format is "{org}:{channelID}:{topics}"
+  # Format is "{org}:{channelID}:{topics}" (all are case sensitive)
+  # You can try your thing by filling them into the following url template
+
+  # https://holodex.net/api/v2/live?org=<org>&channel_id=<channelID>&topic=<one of your topics>
+
   # Org can be left out most of the time, but is useful for if you want to download all topics from an orginization(see 3rd example)
   # A comprehensive list of all topics can be found here: https://docs.google.com/spreadsheets/d/1molZTK_krbT28ksljthRFiUDDiGP8TsXVh4j7m2Q3S4/edit#gid=1285117812
   # Examples:
   # Download all talk and morning streams from Laplus
-  - "hololive:UCENwRMx5Yh42zWpzURebzTw:talk,morning"
+  - "Hololive:UCENwRMx5Yh42zWpzURebzTw:talk,morning"
   # Download all streams from Roboco
-  - "hololive:UCENwRMx5Yh42zWpzURebzTw:*"
+  - "Hololive:UCENwRMx5Yh42zWpzURebzTw:*"
   # Download all ASMR streams from Nijisanji
-  - "nijisanji:*:asmr"
+  - "Nijisanji:*:asmr"
   # Download all streams from Ina Ninomae ignoring org and topics
   - "*:UCMwGHR0BTZuLsmjY_NT5Pwg:*"
 
