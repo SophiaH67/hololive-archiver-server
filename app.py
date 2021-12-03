@@ -11,6 +11,8 @@ from os import environ
 from sqlalchemy.exc import IntegrityError
 from classes.live_job import db, live_job
 import shutil
+import os
+from pathlib import Path
 
 app = Quart(__name__)
 
@@ -55,6 +57,7 @@ def pop_job():
 
 
 def finish_job(job: live_job):
+    os.makedirs(Path(job.final_location).parent, exist_ok=True)
     shutil.move(job.save_location, job.final_location)
 
 
