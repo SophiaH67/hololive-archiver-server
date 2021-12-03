@@ -104,10 +104,8 @@ async def update_live_jobs():
     for holodex_search in holodex_searches:
         for topic in holodex_search.topics:
             for stream in await hololive.get_live(channel_id=holodex_search.channel_id, org=holodex_search.org, topic=topic, limit=50):
-                try:
-                    stream_to_live_job(stream)
-                except Exception as e:
-                    pass
+                stream_to_live_job(stream)
+
     return "OK"
 
 
