@@ -57,6 +57,7 @@ def pop_job():
 def finish_job(job: live_job):
     shutil.move(job.save_location, job.final_location)
 
+
 @app.patch("/job/<int:job_id>")
 async def update_job_state(job_id):
     new_job = (await request.json)
