@@ -12,12 +12,12 @@ class live_job(db.Model, SerializerMixin):
     final_location = db.Column(db.String, nullable=False)
     url = db.Column(db.String, unique=True, nullable=False)
     handler = db.Column(db.String, nullable=False)
-    error = db.Column(db.String, nullable=True)
+    error = db.Column(db.String, nullable=False)
 
-    def __init__(self, url, save_location, final_location, handler="yt-dlp", status="pending"):
+    def __init__(self, url, save_location, final_location, error="", handler="yt-dlp", status="pending"):
         self.url = url
         self.save_location = save_location
         self.final_location = final_location
         self.status = status
         self.handler = handler
-        self.error = None
+        self.error = error

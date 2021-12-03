@@ -59,16 +59,17 @@ def finish_job(job: live_job):
 
 @app.patch("/job/<int:job_id>")
 async def update_job_state(job_id):
-    new_status = (await request.json)["status"]
+    new_job = (await request.json)
     job = db.session.query(live_job).filter(live_job.id == job_id).first()
     if not job:
         abort(404)
     if job.status == "finished":
         abort(400)
-    job.status = new_status
+    job.status = new_job["status"]
+    job.error = new_job["error"]
     db.session.add(job)
     db.session.commit()
-    if new_status == "finished":
+    if new_job.status == "finished":
         finish_job(job)
     return job.to_dict()
 
@@ -85,8 +86,9 @@ def stream_to_live_job(stream: hololive.Stream):
     db.session.add(job)
     try:
         db.session.commit()
-    except IntegrityError:
+    except IntegrityError as e:
         db.session.rollback()
+        print(e)
 
 
 @app.get("/update")
