@@ -9,6 +9,7 @@ from quart import current_app as app
 from sqlalchemy.inspection import inspect
 from os import environ
 from sqlalchemy.exc import IntegrityError
+import psycopg2
 from classes.live_job import db, live_job
 import shutil
 import os
@@ -94,7 +95,9 @@ def stream_to_live_job(stream: hololive.Stream):
         db.session.commit()
     except IntegrityError as e:
         db.session.rollback()
-        print(e)
+        # Check if the error is an instance of psycopg2.errors.UniqueViolation
+        if not isinstance(e.orig, psycopg2.errors.UniqueViolation):
+            raise e
 
 
 @app.get("/update")
