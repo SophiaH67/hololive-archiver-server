@@ -95,7 +95,6 @@ def stream_to_live_job(stream: hololive.Stream):
         db.session.commit()
     except IntegrityError as e:
         db.session.rollback()
-        # Check if the error is an instance of psycopg2.errors.UniqueViolation
         if not isinstance(e.orig, psycopg2.errors.UniqueViolation):
             raise e
 
