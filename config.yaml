@@ -15,6 +15,7 @@ youtube_targets:
   - "Nijisanji:*:asmr"
   # Download all streams from Ina Ninomae ignoring org and topics
   - "*:UCMwGHR0BTZuLsmjY_NT5Pwg:*"
+  - "Hololive:*:*"
 
 
 

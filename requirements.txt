@@ -4,4 +4,4 @@ quart
 sqlalchemy_serializer
 flask_sqlalchemy
 psycopg2
-yaml
+PyYAML
