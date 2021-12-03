@@ -100,6 +100,8 @@ def stream_to_live_job(stream: hololive.Stream):
         # Update job if it already exists
         job = db.session.query(live_job).filter(
             job.url == stream.url).first()
+        if not job.automatic:
+            return
         if job.status == "finished" or job.status == "error":
             return
         job.final_location = get_final_output_path_from_stream(stream)

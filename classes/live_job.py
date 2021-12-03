@@ -15,6 +15,7 @@ class live_job(db.Model, SerializerMixin):
     error = db.Column(db.String, nullable=False)
     hostname = db.Column(db.String, nullable=False)
     ip = db.Column(db.String, nullable=False)
+    automatic = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, url, save_location, final_location, error="", handler="yt-dlp", status="pending"):
         self.url = url
@@ -23,5 +24,6 @@ class live_job(db.Model, SerializerMixin):
         self.status = status
         self.handler = handler
         self.error = error
+        self.automatic = True
         self.hostname = ""
         self.ip = ""
