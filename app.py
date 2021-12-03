@@ -51,6 +51,7 @@ def pop_job():
     if not job:
         abort(404)
     job.status = "scheduled"
+    job.ip = request.remote_addr
     db.session.add(job)
     db.session.commit()
     return job.to_dict()
