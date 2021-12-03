@@ -70,7 +70,7 @@ async def update_job_state(job_id):
     job.error = new_job["error"]
     db.session.add(job)
     db.session.commit()
-    if new_job.status == "finished":
+    if new_job["status"] == "finished":
         finish_job(job)
     return job.to_dict()
 
