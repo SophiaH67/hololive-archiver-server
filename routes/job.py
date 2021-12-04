@@ -15,7 +15,6 @@ def get_specific_job(job_id):
 
 @job_api.get("/job")
 def all_jobs():
-    # Get all jobs and return them as a dict
     jobs = db.session.query(live_job).all()
     return jsonify([job.to_dict() for job in jobs])
 
