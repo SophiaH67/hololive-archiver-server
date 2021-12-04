@@ -6,6 +6,7 @@ from os import environ
 from classes.live_job import db
 from routes.update import update_api, update_jobs
 from routes.job import job_api
+import logging
 
 app = Quart(__name__)
 
@@ -15,6 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.app = app
 db.init_app(app)
 
+logging.getLogger('quart.serving').setLevel(logging.ERROR)
 
 # Create tables if they don't exist
 if not inspect(db.engine).has_table('live_jobs'):
