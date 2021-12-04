@@ -1,7 +1,6 @@
 from quart import Blueprint
 from classes.live_job import db, live_job
-from quart import abort
-from quart import request
+from quart import abort, jsonify, request
 import shutil
 import os
 from pathlib import Path
@@ -15,13 +14,10 @@ def get_specific_job(job_id):
 
 
 @job_api.get("/job")
-def peek_job():
-    # Get the first job from the database where the status is "pending"
-    job = db.session.query(live_job).filter(
-        live_job.status == "pending").first()
-    if not job:
-        abort(404)
-    return job.to_dict()
+def all_jobs():
+    # Get all jobs and return them as a dict
+    jobs = db.session.query(live_job).all()
+    return jsonify([job.to_dict() for job in jobs])
 
 
 @job_api.delete("/job")
