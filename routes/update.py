@@ -8,7 +8,7 @@ import datetime
 from classes.live_job import db, live_job
 from config import get_final_output_path_from_stream, holodex_searches
 
-update_api = Blueprint('account_api', __name__)
+update_api = Blueprint('update_api', __name__)
 
 
 @update_api.get("/update")
