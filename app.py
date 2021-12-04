@@ -27,6 +27,7 @@ if not inspect(db.engine).has_table('live_jobs'):
 app.register_blueprint(update_api)
 app.register_blueprint(job_api)
 
+
 @app.before_serving
 async def startup():
     app.add_background_task(update_jobs)
@@ -40,6 +41,7 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods',
                          'GET,PUT,POST,DELETE,PATCH')
     return response
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
