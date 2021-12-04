@@ -20,7 +20,7 @@ logging.getLogger('quart.serving').setLevel(logging.ERROR)
 
 # Create tables if they don't exist
 if not inspect(db.engine).has_table('live_jobs'):
-    print("Creating tables")
+    logging.warning("Creating tables")
     db.create_all()
 
 # Register routes
