@@ -53,3 +53,13 @@ async def update_job_state(job_id):
     if new_job["status"] == "finished":
         finish_job(job)
     return job.to_dict()
+
+
+@job_api.post("/job")
+async def create_job():
+    new_job = await request.json
+    job = live_job(**new_job)
+    job.automatic = False
+    db.session.add(job)
+    db.session.commit()
+    return job.to_dict()
