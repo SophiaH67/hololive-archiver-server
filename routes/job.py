@@ -33,6 +33,7 @@ def pop_job():
 
 
 def finish_job(job: live_job):
+    print(f"Moving {job.save_location} to {job.final_location}")
     os.makedirs(Path(job.final_location).parent, exist_ok=True)
     shutil.move(job.save_location, job.final_location)
 
