@@ -48,6 +48,7 @@ async def update_job_state(job_id):
     job.status = new_job["status"]
     job.error = new_job["error"]
     job.hostname = new_job["hostname"]
+    job.automatic = new_job["automatic"]
     db.session.add(job)
     db.session.commit()
     if new_job["status"] == "finished":
