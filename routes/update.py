@@ -29,6 +29,7 @@ def stream_to_live_job(stream: hololive.Stream):
         f"https://youtube.com/watch?v={stream.id}",
         f"/shared/{stream.id}/[{formatted_date}] {safe_title}.mkv",
         get_final_output_path_from_stream(stream),
+        handler="ytarchive"
     )
     db.session.add(job)
     try:
