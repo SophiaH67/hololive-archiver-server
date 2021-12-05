@@ -5,6 +5,7 @@ from sqlalchemy.inspection import inspect
 from os import environ
 from classes.live_job import db
 from routes.update import update_api, update_jobs
+from routes.health import health_api
 from routes.job import job_api
 import logging
 
@@ -26,6 +27,7 @@ if not inspect(db.engine).has_table('live_jobs'):
 # Register routes
 app.register_blueprint(update_api)
 app.register_blueprint(job_api)
+app.register_blueprint(health_api)
 
 
 @app.before_serving
