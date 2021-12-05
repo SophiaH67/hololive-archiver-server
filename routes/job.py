@@ -44,8 +44,6 @@ async def update_job_state(job_id):
     job = db.session.query(live_job).filter(live_job.id == job_id).first()
     if not job:
         abort(404)
-    if job.status == "finished":
-        abort(400)
     job.status = new_job["status"]
     job.error = new_job["error"]
     job.hostname = new_job["hostname"]
