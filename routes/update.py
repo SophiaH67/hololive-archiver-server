@@ -1,3 +1,4 @@
+from pathlib import Path
 from quart import Blueprint
 from config import get_final_output_path_from_stream, holodex_searches
 from sqlalchemy.exc import IntegrityError
@@ -31,6 +32,9 @@ def stream_to_live_job(stream: hololive.Stream):
         get_final_output_path_from_stream(stream),
         handler="ytarchive"
     )
+    # Check if the final output path exists
+    if Path(job.final_output_path).exists():
+        job.status = "finished"
     db.session.add(job)
     try:
         db.session.commit()
