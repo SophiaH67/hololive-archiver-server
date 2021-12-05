@@ -39,11 +39,11 @@ def stream_to_live_job(stream: hololive.Stream):
         if not isinstance(e.orig, psycopg2.errors.UniqueViolation):
             raise e
         # Update job if it already exists
-        job = db.session.query(live_job).filter(
+        existing_job = db.session.query(live_job).filter(
             job.url == f"https://youtube.com/watch?v={stream.id}").first()
-        if not job.automatic:
+        if not existing_job.automatic:
             return
-        if job.status == "finished" or job.status == "error":
+        if existing_job.status == "finished" or existing_job.status == "error":
             return
         job.final_location = get_final_output_path_from_stream(stream)
 
