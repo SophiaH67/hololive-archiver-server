@@ -33,7 +33,7 @@ def stream_to_live_job(stream: hololive.Stream):
         handler="ytarchive"
     )
     # Check if the final output path exists
-    if Path(job.final_output_path).exists():
+    if Path(job.final_location).exists():
         job.status = "finished"
     db.session.add(job)
     try:
