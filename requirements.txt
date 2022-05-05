@@ -1,8 +1,0 @@
-hololive==0.1.4
-asyncio
-quart
-sqlalchemy_serializer
-flask_sqlalchemy
-psycopg2
-PyYAML
-pathlib
