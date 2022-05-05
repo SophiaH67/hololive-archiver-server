@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\DownloadJob;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
         Schema::create('download_attempts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor('download_job');
+            $table->foreignIdFor(DownloadJob::class);
             $table->boolean('success');
             $table->text('logs');
             $table->dateTime('heartbeat_at');

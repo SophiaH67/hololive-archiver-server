@@ -28,8 +28,16 @@ class DownloadJob extends Model
     public function getStatusAttribute()
     {
         // Get the status of the latest DownloadAttempt
-        $latestAttempt = $this->dowloadAttempts()->latest()->first();
-        return $latestAttempt->status;
+        $status = $this->dowloadAttempts()->latest()->first()->status;
+        if ($status === "failed") {
+            // If more than 3 attempts have failed, return failed.
+            if ($this->dowloadAttempts()->where('status', 'failed')->count() > 3) {
+                return "failed";
+            } else {
+                return "pending";
+            }
+        }
+        return $status;
     }
 
     public function getTriesAttribute()

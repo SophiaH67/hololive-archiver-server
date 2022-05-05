@@ -39,30 +39,7 @@ class DownloadRequestController extends Controller
      */
     public function show(DownloadRequest $downloadRequest)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DownloadRequest  $downloadRequest
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DownloadRequest $downloadRequest)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateDownloadRequestRequest  $request
-     * @param  \App\Models\DownloadRequest  $downloadRequest
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateDownloadRequestRequest $request, DownloadRequest $downloadRequest)
-    {
-        //
+        return $downloadRequest;
     }
 
     /**
@@ -73,6 +50,6 @@ class DownloadRequestController extends Controller
      */
     public function destroy(DownloadRequest $downloadRequest)
     {
-        //
+        return response()->json($downloadRequest->delete(), 204);
     }
 }

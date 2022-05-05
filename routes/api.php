@@ -20,3 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('download-requests', DownloadRequestController::class);
+// Pop a job
+Route::delete('download-jobs/{platform}', 'DownloadJobController@pop');
+// Update an attempt
+Route::put('download-jobs/{downloadRequest}/{platform}', 'DownloadRequestController@update');
+// Pop
+Route::delete('download-jobs/{platform}', 'DownloadJobController@pop');

@@ -9,6 +9,11 @@ class DownloadAttempt extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'heartbeat_at',
+        'logs',
+    ];
+
     public function downloadJob()
     {
         return $this->belongsTo(DownloadJob::class);

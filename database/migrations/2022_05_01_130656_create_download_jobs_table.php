@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\DownloadRequest;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
         Schema::create('download_jobs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor('download_requests')->constrained();
+            $table->foreignIdFor(DownloadRequest::class)->constrained();
         });
     }
 

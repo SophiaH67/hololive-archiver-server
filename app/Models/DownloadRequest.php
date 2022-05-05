@@ -14,4 +14,9 @@ class DownloadRequest extends Model
         'output_folder',
         'platform',
     ];
+
+    public function downloadJobs()
+    {
+        return $this->hasMany(DownloadJob::class);
+    }
 }

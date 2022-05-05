@@ -17,7 +17,9 @@ class DownloadRequestFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'url' => "https://youtube.com/watch?v=dQw4w9WgXcQ&random=" . urlencode($this->faker->text()),
+            'output_folder' => "/tmp",
+            'platform' => "youtube",
         ];
     }
 }

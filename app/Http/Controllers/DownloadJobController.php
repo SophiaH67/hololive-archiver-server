@@ -2,85 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDownloadJobRequest;
-use App\Http\Requests\UpdateDownloadJobRequest;
+use App\Models\DownloadAttempt;
 use App\Models\DownloadJob;
 
 class DownloadJobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function pop(String $platform)
     {
-        //
-    }
+        // Find a DownloadJob and join it with DownloadAttempt.
+        $downloadJobs = DownloadJob::where(function ($query) use ($platform) {
+            $query->where('platform', $platform)
+                ->orWhereNull('platform');
+        })->with(DownloadAttempt::class)->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        // If there are no DownloadJobs, return null.
+        if ($downloadJobs->isEmpty()) {
+            return null;
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreDownloadJobRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreDownloadJobRequest $request)
-    {
-        //
-    }
+        // Find the first DownloadJob that has a status of `pending`.
+        $downloadJob = $downloadJobs->first(function ($downloadJob) {
+            return $downloadJob->status === "pending";
+        });
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DownloadJob  $downloadJob
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DownloadJob $downloadJob)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DownloadJob  $downloadJob
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DownloadJob $downloadJob)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateDownloadJobRequest  $request
-     * @param  \App\Models\DownloadJob  $downloadJob
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateDownloadJobRequest $request, DownloadJob $downloadJob)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DownloadJob  $downloadJob
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DownloadJob $downloadJob)
-    {
-        //
+        // Start a new DownloadAttempt for the DownloadJob and return it.
+        $downloadAttempt = $downloadJob->downloadAttempts()->create();
+        return $downloadAttempt;
     }
 }

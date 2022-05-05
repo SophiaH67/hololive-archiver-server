@@ -17,7 +17,9 @@ class DownloadAttemptFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'logs' => $this->faker->text(),
+            'heartbeat_at' => now(),
+            'success' => $this->faker->boolean(),
         ];
     }
 }

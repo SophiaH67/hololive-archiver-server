@@ -8,6 +8,8 @@ use Tests\TestCase;
 
 class DownloadRequestTest extends TestCase
 {
+    use WithFaker;
+
     /**
      * It should return a list of download requests.
      * @test
@@ -25,24 +27,19 @@ class DownloadRequestTest extends TestCase
      */
     public function it_should_be_able_to_create_a_new_download_request()
     {
-        $response = $this->post('/api/download-requests', [
-            'url' => 'https://youtube.com/watch?v=dQw4w9WgXcQ',
+        $this->setUpFaker();
+
+        $fake_request = [
+            'url' => "https://youtube.com/watch?v=dQw4w9WgXcQ&random=" . urlencode($this->faker->text()),
             'output_folder' => '/tmp/',
             'platform' => 'youtube',
-        ]);
+        ];
+        $response = $this->post('/api/download-requests', $fake_request);
 
         $response->assertStatus(201);
 
-        $response->assertJson([
-            'url' => 'https://youtube.com/watch?v=dQw4w9WgXcQ',
-            'output_folder' => '/tmp/',
-            'platform' => 'youtube',
-        ]);
+        $response->assertJson($fake_request);
 
-        $this->assertDatabaseHas('download_requests', [
-            'url' => 'https://youtube.com/watch?v=dQw4w9WgXcQ',
-            'output_folder' => '/tmp/',
-            'platform' => 'youtube',
-        ]);
+        $this->assertDatabaseHas('download_requests', $fake_request);
     }
 }
