@@ -18,9 +18,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(DownloadJob::class);
-            $table->boolean('success');
-            $table->text('logs');
-            $table->dateTime('heartbeat_at');
+            $table->boolean('success')->default(false);
+            $table->text('logs')->nullable();
+            $table->timestamp('heartbeat_at');
         });
     }
 

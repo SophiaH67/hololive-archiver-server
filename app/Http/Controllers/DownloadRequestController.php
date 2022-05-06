@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDownloadRequestRequest;
 use App\Http\Requests\UpdateDownloadRequestRequest;
+use App\Jobs\ProcessDownloadRequest;
 use App\Models\DownloadRequest;
 
 class DownloadRequestController extends Controller
@@ -15,7 +16,7 @@ class DownloadRequestController extends Controller
      */
     public function index()
     {
-        return DownloadRequest::all();
+        return DownloadRequest::all()->load(['downloadJobs', 'downloadJobs.downloadAttempts']);
     }
 
     /**
@@ -26,8 +27,9 @@ class DownloadRequestController extends Controller
      */
     public function store(StoreDownloadRequestRequest $request)
     {
-        $downloadRequest = DownloadRequest::create($request->all());
-
+        $downloadRequest = DownloadRequest::create($request->validated());
+        ProcessDownloadRequest::dispatchSync($downloadRequest);
+        $downloadRequest->load(['downloadJobs', 'downloadJobs.downloadAttempts']);
         return response()->json($downloadRequest, 201);
     }
 

@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('download_jobs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('url');
             $table->foreignIdFor(DownloadRequest::class)->constrained();
         });
     }

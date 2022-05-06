@@ -15,12 +15,20 @@ class DownloadJob extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'status',
+    ];
+
+    protected $fillable = [
+        'url',
+    ];
+
     public function downloadRequest()
     {
         return $this->belongsTo(DownloadRequest::class);
     }
 
-    public function dowloadAttempts()
+    public function downloadAttempts()
     {
         return $this->hasMany(DownloadAttempt::class);
     }
@@ -28,10 +36,14 @@ class DownloadJob extends Model
     public function getStatusAttribute()
     {
         // Get the status of the latest DownloadAttempt
-        $status = $this->dowloadAttempts()->latest()->first()->status;
+        $downloadAttempt = $this->downloadAttempts()->latest()->first();
+        if ($downloadAttempt === null) {
+            return 'pending';
+        }
+        $status = $downloadAttempt->status;
         if ($status === "failed") {
             // If more than 3 attempts have failed, return failed.
-            if ($this->dowloadAttempts()->where('status', 'failed')->count() > 3) {
+            if ($this->downloadAttempts()->where('status', 'failed')->count() > 3) {
                 return "failed";
             } else {
                 return "pending";

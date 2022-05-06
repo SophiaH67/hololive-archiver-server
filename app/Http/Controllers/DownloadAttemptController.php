@@ -2,43 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDownloadAttemptRequest;
 use App\Http\Requests\UpdateDownloadAttemptRequest;
 use App\Models\DownloadAttempt;
 
 class DownloadAttemptController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreDownloadAttemptRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreDownloadAttemptRequest $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -47,18 +15,7 @@ class DownloadAttemptController extends Controller
      */
     public function show(DownloadAttempt $downloadAttempt)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DownloadAttempt  $downloadAttempt
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DownloadAttempt $downloadAttempt)
-    {
-        //
+        return $downloadAttempt;
     }
 
     /**
@@ -70,7 +27,13 @@ class DownloadAttemptController extends Controller
      */
     public function update(UpdateDownloadAttemptRequest $request, DownloadAttempt $downloadAttempt)
     {
-        //
+        if ($downloadAttempt->status !== 'processing') {
+            return response()->json(null, 400);
+        }
+        $values = $request->validated();
+        $values['heartbeat_at'] = now();
+        $downloadAttempt->update($values);
+        return $downloadAttempt;
     }
 
     /**
@@ -81,6 +44,7 @@ class DownloadAttemptController extends Controller
      */
     public function destroy(DownloadAttempt $downloadAttempt)
     {
-        //
+        $downloadAttempt->delete();
+        return response()->json(null, 204);
     }
 }

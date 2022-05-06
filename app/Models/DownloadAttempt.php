@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class DownloadAttempt extends Model
 {
     use HasFactory;
+    // Register `heartbeat_at` as a carbon instance.
+    protected $casts = [
+        'heartbeat_at' => 'datetime',
+    ];
+
+    protected $appends = [
+        'status',
+    ];
 
     protected $fillable = [
         'heartbeat_at',

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DownloadAttemptController;
 use App\Http\Controllers\DownloadRequestController;
+use App\Http\Controllers\DownloadJobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('download-requests', DownloadRequestController::class);
 // Pop a job
-Route::delete('download-jobs/{platform}', 'DownloadJobController@pop');
+Route::delete('download-jobs/{platform}', [DownloadJobController::class, 'pop']);
 // Update an attempt
-Route::put('download-jobs/{downloadRequest}/{platform}', 'DownloadRequestController@update');
-// Pop
-Route::delete('download-jobs/{platform}', 'DownloadJobController@pop');
+Route::put('download-attempts/{downloadAttempt}', [DownloadAttemptController::class, 'update']);
+Route::get('download-attempts/{downloadAttempt}', [DownloadAttemptController::class, 'show']);
