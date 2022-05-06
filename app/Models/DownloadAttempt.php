@@ -15,11 +15,14 @@ class DownloadAttempt extends Model
 
     protected $appends = [
         'status',
+        'url',
+        'output_folder',
     ];
 
     protected $fillable = [
         'heartbeat_at',
         'logs',
+        'success',
     ];
 
     public function downloadJob()
@@ -36,5 +39,15 @@ class DownloadAttempt extends Model
             return 'processing';
         }
         return 'failed';
+    }
+
+    public function getUrlAttribute()
+    {
+        return $this->downloadJob->url;
+    }
+
+    public function getOutputFolderAttribute()
+    {
+        return $this->downloadJob->output_folder;
     }
 }

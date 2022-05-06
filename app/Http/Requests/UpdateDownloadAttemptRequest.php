@@ -25,6 +25,7 @@ class UpdateDownloadAttemptRequest extends FormRequest
     {
         return [
             'logs' => 'required|string',
+            'success' => 'required|boolean',
         ];
     }
 }

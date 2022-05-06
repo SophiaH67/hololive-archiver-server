@@ -26,4 +26,5 @@ Route::apiResource('download-requests', DownloadRequestController::class);
 Route::delete('download-jobs/{platform}', [DownloadJobController::class, 'pop']);
 // Update an attempt
 Route::put('download-attempts/{downloadAttempt}', [DownloadAttemptController::class, 'update']);
+Route::patch('download-attempts/{downloadAttempt}', [DownloadAttemptController::class, 'update']);
 Route::get('download-attempts/{downloadAttempt}', [DownloadAttemptController::class, 'show']);

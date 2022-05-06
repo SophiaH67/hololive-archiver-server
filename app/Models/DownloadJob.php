@@ -56,4 +56,9 @@ class DownloadJob extends Model
     {
         return $this->dowloadAttempts()->count();
     }
+
+    public function getOutputFolderAttribute()
+    {
+        return $this->downloadRequest->output_folder;
+    }
 }
