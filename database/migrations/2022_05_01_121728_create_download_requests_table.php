@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('url')->unique();
             $table->string('output_folder');
+            $table->string('output_file');
             $table->string('platform');
             $table->softDeletes();
         });

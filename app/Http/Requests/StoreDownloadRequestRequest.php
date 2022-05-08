@@ -26,6 +26,7 @@ class StoreDownloadRequestRequest extends FormRequest
         return [
             'url' => 'required|url',
             'output_folder' => 'required|string',
+            'output_file' => 'required|string',
             'platform' => 'required|string',
         ];
     }

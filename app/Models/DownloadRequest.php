@@ -12,6 +12,7 @@ class DownloadRequest extends Model
     protected $fillable = [
         'url',
         'output_folder',
+        'output_file',
         'platform',
     ];
 

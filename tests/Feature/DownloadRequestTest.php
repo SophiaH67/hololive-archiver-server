@@ -32,6 +32,7 @@ class DownloadRequestTest extends TestCase
         $fake_request = [
             'url' => "https://youtube.com/watch?v=dQw4w9WgXcQ&random=" . urlencode($this->faker->text()),
             'output_folder' => '/tmp/',
+            'output_file' => $this->faker->fileExtension,
             'platform' => 'youtube',
         ];
         $response = $this->post('/api/download-requests', $fake_request);
